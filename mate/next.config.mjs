@@ -6,11 +6,12 @@ const nextConfig = {
       { protocol: 'https', hostname: 'res.cloudinary.com' },
     ],
   },
+  // Fix for the Turbopack/Tracing root conflict
   experimental: {
-    serverActions: { 
-      allowedOrigins: ['localhost:3000'] 
-    },
+    serverActions: true,
   },
+  // Ensure we don't have conflicting root settings
+  output: 'standalone',
 };
 
 export default nextConfig;
