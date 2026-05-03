@@ -1,7 +1,5 @@
-import type { NextConfig } from "next";
-import path from "path";
-
-const nextConfig: NextConfig = {
+/** @type {import('next').NextConfig} */
+const nextConfig = {
   images: {
     remotePatterns: [
       { protocol: 'https', hostname: 'images.unsplash.com' },
@@ -9,10 +7,9 @@ const nextConfig: NextConfig = {
     ],
   },
   experimental: {
-    serverActions: { allowedOrigins: ['localhost:3000'] },
-  },
-  turbopack: {
-    root: path.resolve(__dirname),
+    serverActions: { 
+      allowedOrigins: ['localhost:3000'] 
+    },
   },
 };
 
