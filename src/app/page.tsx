@@ -40,7 +40,7 @@ export default function HomePage() {
       {/* Navbar */}
       <nav className={`navbar ${scrolled ? 'glass' : ''}`} style={{ justifyContent: 'space-between' }}>
         <Link href="/" className="flex items-center gap-2">
-          <span style={{ fontSize: '1.5rem' }}>🏠</span>
+          <img src="/logo.png" alt="Mate Logo" style={{ width: '2rem', height: '2rem', borderRadius: '0.5rem', objectFit: 'cover' }} />
           <span className="font-bold text-xl" style={{ fontFamily: 'Outfit, sans-serif' }}>
             <span className="gradient-text">Mate</span>
           </span>
@@ -150,7 +150,7 @@ export default function HomePage() {
         textAlign: 'center',
       }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <span style={{ fontSize: '1.25rem' }}>🏠</span>
+          <img src="/logo.png" alt="Mate Logo" style={{ width: '1.5rem', height: '1.5rem', borderRadius: '0.375rem', objectFit: 'cover' }} />
           <span className="font-bold" style={{ fontFamily: 'Outfit' }}>
             <span className="gradient-text">Mate</span>
           </span>
