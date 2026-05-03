@@ -1,0 +1,105 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id                String     @id @default(cuid())
+  email             String     @unique
+  name              String
+  passwordHash      String
+  role              String     @default("seeker")
+  avatar            String?
+  bio               String?
+  phone             String?
+  emailVerified     Boolean    @default(false)
+  phoneVerified     Boolean    @default(false)
+  createdAt         DateTime   @default(now())
+  updatedAt         DateTime   @updatedAt
+  budget            Int?
+  smokingOk         Boolean    @default(false)
+  petsOk            Boolean    @default(false)
+  workSchedule      String?
+  lifestyle         String?
+  cleanlinessLevel  Int?
+  preferredCity     String?
+  preferredArea     String?
+  preferredState    String?
+  receivedInquiries Inquiry[]  @relation("ReceivedInquiries")
+  sentInquiries     Inquiry[]  @relation("SentInquiries")
+  receivedMessages  Message[]  @relation("ReceivedMessages")
+  sentMessages      Message[]  @relation("SentMessages")
+  otps              OTP[]
+  properties        Property[]
+}
+
+model Property {
+  id               String    @id @default(cuid())
+  ownerId          String
+  title            String
+  description      String
+  address          String
+  city             String
+  area             String
+  lat              Float?
+  lng              Float?
+  rent             Int
+  deposit          Int?
+  bedrooms         Int       @default(1)
+  bathrooms        Int       @default(1)
+  furnished        Boolean   @default(false)
+  available        Boolean   @default(true)
+  availableFrom    DateTime?
+  smokingAllowed   Boolean   @default(false)
+  petsAllowed      Boolean   @default(false)
+  genderPreference String?
+  amenities        String    @default("[]")
+  photos           String    @default("[]")
+  isRoommateListing Boolean  @default(false)
+  createdAt        DateTime  @default(now())
+  updatedAt        DateTime  @updatedAt
+  state            String?
+  inquiries        Inquiry[]
+  owner            User      @relation(fields: [ownerId], references: [id])
+}
+
+model Inquiry {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  propertyId String
+  status     String   @default("pending")
+  message    String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  property   Property @relation(fields: [propertyId], references: [id])
+  receiver   User     @relation("ReceivedInquiries", fields: [receiverId], references: [id])
+  sender     User     @relation("SentInquiries", fields: [senderId], references: [id])
+}
+
+model Message {
+  id         String   @id @default(cuid())
+  senderId   String
+  receiverId String
+  content    String
+  read       Boolean  @default(false)
+  createdAt  DateTime @default(now())
+  receiver   User     @relation("ReceivedMessages", fields: [receiverId], references: [id])
+  sender     User     @relation("SentMessages", fields: [senderId], references: [id])
+}
+
+model OTP {
+  id        String   @id @default(cuid())
+  userId    String
+  code      String
+  type      String
+  expiresAt DateTime
+  attempts  Int      @default(0)
+  used      Boolean  @default(false)
+  createdAt DateTime @default(now())
+  user      User     @relation(fields: [userId], references: [id])
+}
