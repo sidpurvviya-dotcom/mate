@@ -13,7 +13,7 @@ export default function PostRequirement() {
       <div className="card" style={{ maxWidth: 800, width: '100%', padding: '3rem' }}>
         <div className="text-center mb-10">
           <Link href="/" className="logo-container" style={{ justifyContent: 'center', marginBottom: '2rem' }}>
-            <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
+            <img src="/logo.png" alt="Mate Logo" className="mate-logo" />
           </Link>
           <h1 className="text-3xl font-bold mb-2">What are you looking for?</h1>
           <p className="text-secondary-color">Choose your path to get started</p>

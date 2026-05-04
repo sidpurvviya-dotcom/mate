@@ -285,7 +285,7 @@ export default function RoommatesPage() {
       {/* Navbar */}
       <nav className="navbar glass" style={{ justifyContent: 'space-between' }}>
         <Link href="/" className="logo-container">
-          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
+          <img src="/logo.png" alt="Mate Logo" className="mate-logo" />
         </Link>
         {/* Desktop links */}
         <div className="hide-mobile items-center gap-2">

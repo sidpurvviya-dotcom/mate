@@ -41,7 +41,7 @@ export default function HomePage() {
       {/* Navbar */}
       <nav className={`navbar ${scrolled ? 'glass' : ''}`} style={{ justifyContent: 'space-between' }}>
         <Link href="/" className="logo-container">
-          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
+          <img src="/logo.png" alt="Mate Logo" className="mate-logo" />
         </Link>
 
         {/* Desktop nav links */}
@@ -212,7 +212,7 @@ export default function HomePage() {
         textAlign: 'center',
       }}>
         <div className="logo-container" style={{ justifyContent: 'center', padding: 0, marginBottom: '0.75rem' }}>
-          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
+          <img src="/logo.png" alt="Mate Logo" className="mate-logo" />
         </div>
         <p className="text-muted text-sm">
           © 2026 Mate. Built with ♥ for smarter house hunting.

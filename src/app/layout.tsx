@@ -8,14 +8,14 @@ export const metadata: Metadata = {
   description: 'Mate connects property owners and roommate seekers with intelligent matching, real-time messaging, and a beautiful browsing experience.',
   keywords: 'roommate finder, property listing, PG, flat share, house sharing India',
   icons: {
-    icon: '/logo.svg',
-    apple: '/logo.svg',
+    icon: '/logo.png',
+    apple: '/logo.png',
   },
   openGraph: {
     title: 'Mate — Find Your Perfect Roommate',
     description: 'Smart roommate matching platform for India',
     type: 'website',
-    images: ['/logo.svg'],
+    images: ['/logo.png'],
   },
 }
 

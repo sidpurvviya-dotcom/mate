@@ -66,7 +66,7 @@ export default function RegisterPage() {
 
         {/* Logo */}
         <Link href="/" className="logo-container" style={{ justifyContent: 'center', marginBottom: '2rem' }}>
-          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
+          <img src="/logo.png" alt="Mate Logo" className="mate-logo" />
         </Link>
 
         <div className="card card-elevated">

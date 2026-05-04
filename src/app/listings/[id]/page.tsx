@@ -82,7 +82,7 @@ export default function PropertyDetailPage() {
       <nav className="navbar glass" style={{ justifyContent: 'space-between' }}>
         <Link href="/rooms" className="btn btn-ghost btn-sm">← Back to Rooms</Link>
         <Link href="/" className="logo-container">
-          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
+          <img src="/logo.png" alt="Mate Logo" className="mate-logo" />
         </Link>
         {mounted && user ? (
           <Link href="/dashboard" className="btn btn-secondary btn-sm">Dashboard</Link>
