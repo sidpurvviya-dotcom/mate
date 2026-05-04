@@ -917,13 +917,21 @@ input[type="range"]::-webkit-slider-thumb {
   .stat-card p { font-size: 0.75rem !important; margin: 0; }
 
   /* Browse Page Filters */
-  .filter-row {
+  .filter-row, .filter-container {
     flex-direction: column !important;
     align-items: stretch !important;
+    gap: 12px !important;
+    width: 100%;
   }
-  .filter-row .form-group {
+  .filter-row .form-group, .filter-item {
     flex: 1 1 100% !important;
+    width: 100% !important;
   }
+  .filter-label {
+    font-size: 12px !important;
+    margin-bottom: 4px;
+  }
+  .filter-icon-chip .chip-text { display: none; }
 
   /* 5. Horizontal Swiping for City List */
   .city-chips-container, .city-chips {
@@ -943,6 +951,20 @@ input[type="range"]::-webkit-slider-thumb {
   /* Bottom Navigation */
   .bottom-nav-item, .mobile-tab-btn {
     padding: 5px !important;
+  }
+
+  /* Empty State & Buttons */
+  .no-results-content {
+    padding: 20px;
+    text-align: center;
+  }
+  .main-heading {
+    font-size: 1.5rem !important;
+  }
+  .update-profile-btn {
+    width: 100% !important;
+    font-size: 14px !important;
+    padding: 14px !important;
   }
 }
 

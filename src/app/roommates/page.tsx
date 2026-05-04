@@ -364,7 +364,7 @@ export default function RoommatesPage() {
           </div>
 
           {/* City quick-filter pills */}
-          <div className="flex gap-2 mt-4 flex-wrap pb-2">
+          <div className="city-chips-wrapper">
             {CITIES.map((c) => (
               <button key={c}
                 className={`filter-chip ${filters.city === (c === 'All Cities' ? '' : c) ? 'active' : ''}`}
@@ -382,9 +382,9 @@ export default function RoommatesPage() {
         {/* Filters bar */}
         <div className="mb-6">
           <div className="card" style={{ padding: '1rem 1.5rem' }}>
-            <div className="flex flex-wrap gap-3 items-end">
-              <div className="form-group" style={{ flex: '1 0 min(100%, 220px)', zIndex: 10 }}>
-                <label className="form-label">City</label>
+            <div className="flex flex-wrap gap-3 items-end filter-container">
+              <div className="form-group filter-item" style={{ flex: '1 0 min(100%, 220px)', zIndex: 10 }}>
+                <label className="form-label filter-label">City</label>
                 <CitySearchSelect
                   value={filters.city}
                   onChange={(city) => {
@@ -392,8 +392,8 @@ export default function RoommatesPage() {
                   }}
                 />
               </div>
-              <div className="form-group" style={{ flex: '1 0 min(100%, 160px)' }}>
-                <label className="form-label">Lifestyle</label>
+              <div className="form-group filter-item" style={{ flex: '1 0 min(100%, 160px)' }}>
+                <label className="form-label filter-label">Lifestyle</label>
                 <select className="form-select" value={filters.lifestyle}
                   onChange={(e) => {
                     setFilters({ ...filters, lifestyle: e.target.value })
@@ -401,8 +401,8 @@ export default function RoommatesPage() {
                   {LIFESTYLE_OPTIONS.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
                 </select>
               </div>
-              <div className="form-group" style={{ flex: '1 0 min(100%, 160px)' }}>
-                <label className="form-label">Work Schedule</label>
+              <div className="form-group filter-item" style={{ flex: '1 0 min(100%, 160px)' }}>
+                <label className="form-label filter-label">Work Schedule</label>
                 <select className="form-select" value={filters.workSchedule}
                   onChange={(e) => {
                     setFilters({ ...filters, workSchedule: e.target.value })
@@ -410,8 +410,8 @@ export default function RoommatesPage() {
                   {SCHEDULE_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
                 </select>
               </div>
-              <div className="form-group" style={{ flex: '1 0 min(100%, 130px)' }}>
-                <label className="form-label">Max Budget (₹)</label>
+              <div className="form-group filter-item" style={{ flex: '1 0 min(100%, 130px)' }}>
+                <label className="form-label filter-label">Max Budget (₹)</label>
                 <input type="text" inputMode="numeric" className="form-input" placeholder="50,000"
                   value={filters.maxBudget}
                   onChange={(e) => {
@@ -422,15 +422,15 @@ export default function RoommatesPage() {
               <div className="flex justify-between items-center w-full mt-2 pt-2" style={{ borderTop: '1px solid var(--border)' }}>
                 <div className="flex gap-2 flex-wrap">
                   {[
-                    { key: 'petsOk', label: '🐾 Pet Friendly' },
-                    { key: 'smokingOk', label: '🚬 Smoking OK' },
-                  ].map(({ key, label }) => (
+                    { key: 'petsOk', icon: '🐾', text: 'Pet Friendly' },
+                    { key: 'smokingOk', icon: '🚬', text: 'Smoking OK' },
+                  ].map(({ key, icon, text }) => (
                     <button key={key}
-                      className={`filter-chip ${(filters as any)[key] ? 'active' : ''}`}
+                      className={`filter-chip filter-icon-chip ${(filters as any)[key] ? 'active' : ''}`}
                       onClick={() => {
                         setFilters({ ...filters, [key]: !(filters as any)[key] })
                       }}>
-                      {label}
+                      {icon} <span className="chip-text">{text}</span>
                     </button>
                   ))}
                 </div>
@@ -479,17 +479,17 @@ export default function RoommatesPage() {
             ))}
           </div>
         ) : seekers.length === 0 ? (
-          <div className="text-center py-20 card">
+          <div className="text-center py-20 card no-results-content">
             <div style={{ fontSize: '4rem', marginBottom: '1rem' }}>🤔</div>
-            <h3 className="text-xl font-semibold mb-2">No roommates found</h3>
+            <h3 className="text-xl font-semibold mb-2 main-heading">No roommates found</h3>
             <p className="text-secondary-color mb-6">Try adjusting your filters or check back later.</p>
-            <div className="flex gap-3 justify-center">
-              <button className="btn btn-secondary" onClick={() => setFilters({
+            <div className="flex gap-3 justify-center button-group">
+              <button className="btn btn-secondary update-profile-btn" onClick={() => setFilters({
                 city: '', lifestyle: '', workSchedule: '',
                 maxBudget: '', smokingOk: false, petsOk: false,
               })}>Clear Filters</button>
               {mounted && !user && (
-                <Link href="/auth/login" className="btn btn-primary">Sign In to Continue</Link>
+                <Link href="/auth/login" className="btn btn-primary update-profile-btn">Sign In to Continue</Link>
               )}
             </div>
           </div>
@@ -513,7 +513,7 @@ export default function RoommatesPage() {
             <p className="text-secondary-color text-sm mb-5">
               Complete your profile with bio, preferences and budget so owners can find you.
             </p>
-            <Link href="/dashboard/profile" className="btn btn-primary">Update My Profile →</Link>
+            <Link href="/dashboard/profile" className="btn btn-primary update-profile-btn">Update My Profile →</Link>
           </div>
         )}
         {mounted && !user && (
