@@ -7,7 +7,7 @@
   },
   "scripts": {
     "dev": "next dev",
-    "build": "npx prisma@5.22.0 generate && next build",
+    "build": "prisma generate && next build",
     "start": "next start",
     "lint": "eslint",
     "seed": "npx tsx prisma/seed.ts",
@@ -18,7 +18,7 @@
     "@libsql/client": "^0.17.3",
     "@prisma/adapter-better-sqlite3": "^7.8.0",
     "@prisma/adapter-libsql": "^7.8.0",
-    "@prisma/client": "^5.22.0",
+    "@prisma/client": "^7.8.0",
     "@types/better-sqlite3": "^7.6.13",
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^12.9.0",
@@ -46,7 +46,7 @@
     "@types/react-dom": "19.0.0",
     "eslint": "^9",
     "eslint-config-next": "^16.2.4",
-    "prisma": "^5.22.0",
+    "prisma": "^7.8.0",
     "tailwindcss": "^4",
     "tsx": "^4.21.0",
     "typescript": "^5"
