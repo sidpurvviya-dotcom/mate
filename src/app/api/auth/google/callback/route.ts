@@ -74,7 +74,7 @@ export async function GET(req: NextRequest) {
     })
 
     // 5. Build response and redirect
-    const response = NextResponse.redirect(new URL('/dashboard', req.url))
+    const response = NextResponse.redirect(new URL('/dashboard/profile', req.url))
     
     // Set cookie for server-side auth
     response.cookies.set('mate_token', token, {
