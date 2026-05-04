@@ -822,3 +822,70 @@ input[type="range"]::-webkit-slider-thumb {
   .btn:active { transform: scale(0.97); }
   .filter-chip:active { background: rgba(99,102,241,0.2); }
 }
+
+/* ─── Responsive adjustments for Mobile (max-width: 480px) ─────────────── */
+@media (max-width: 480px) {
+  /* 1. Fix Home Page Headline */
+  h1, .hero-title {
+    font-size: 1.8rem !important;
+    line-height: 1.2 !important;
+    padding: 0 10px;
+  }
+
+  /* 2. Fix the "Browse Rooms" & "Find Roommate" buttons */
+  .action-buttons {
+    flex-direction: column !important;
+    gap: 10px;
+  }
+  .action-buttons .btn {
+    width: 100% !important;
+  }
+
+  /* 3. Fix the Statistics Cards (2,400+ and 98%) */
+  .stats-grid {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 8px !important;
+    padding: 0 10px;
+  }
+  .stat-card {
+    min-width: unset !important;
+    padding: 15px 5px !important;
+  }
+
+  /* 4. Fix Browse Page Filters (Cities & Rent) */
+  .filter-row {
+    flex-direction: column !important;
+    align-items: stretch !important;
+  }
+  .filter-row .form-group {
+    flex: 1 1 100% !important;
+  }
+
+  .city-chips {
+    overflow-x: auto;
+    display: flex;
+    white-space: nowrap;
+    flex-wrap: nowrap !important;
+    padding-bottom: 5px;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+  }
+  .city-chips::-webkit-scrollbar {
+    display: none;
+  }
+
+  /* 5. Fix Navigation Bar (Bottom) */
+  .mobile-tab-btn {
+    font-size: 10px !important;
+  }
+  .mobile-tab-btn .tab-icon {
+    font-size: 1.1rem !important; /* Scaled down ~15% from 1.3rem */
+  }
+
+  /* The 15px Rule */
+  .container {
+    padding-left: 15px !important;
+    padding-right: 15px !important;
+  }
+}

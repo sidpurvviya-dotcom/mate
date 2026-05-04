@@ -162,7 +162,7 @@ export default function RoomsPage() {
           </div>
 
           {/* City quick-filter pills */}
-          <div className="flex gap-2 mt-4 flex-wrap pb-2">
+          <div className="flex gap-2 mt-4 flex-wrap pb-2 city-chips">
             {CITIES.map((c) => (
               <button key={c}
                 className={`filter-chip ${filters.city === (c === 'All Cities' ? '' : c) ? 'active' : ''}`}
@@ -180,7 +180,7 @@ export default function RoomsPage() {
         {/* Filters bar */}
         <div className="mb-6">
           <div className="card" style={{ padding: '1rem 1.5rem' }} id="rooms-filters">
-            <div className="flex flex-wrap gap-3 items-end">
+            <div className="flex flex-wrap gap-3 items-end filter-row">
               <div className="form-group" style={{ flex: '1 0 min(100%, 220px)', zIndex: 10 }}>
                 <label className="form-label">City</label>
                 <CitySearchSelect
