@@ -837,23 +837,6 @@ input[type="range"]::-webkit-slider-thumb {
   transition: transform 0.2s ease-in-out;
 }
 
-.navbar {
-  position: sticky;
-  top: 0;
-  z-index: 999;
-  background-color: #000000 !important;
-  color: #ffffff !important;
-  border-bottom: none !important;
-}
-
-.navbar a, .navbar .btn-ghost {
-  color: #ffffff !important;
-}
-
-.footer {
-  background-color: #000000 !important;
-  color: #ffffff !important;
-}
 
 /* ─── Responsive adjustments for Mobile (max-width: 480px) ─────────────── */
 @media (max-width: 480px) {
