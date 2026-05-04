@@ -137,11 +137,8 @@ function VerifyEmailContent() {
 
       <div style={{ width: '100%', maxWidth: 480, position: 'relative', zIndex: 1 }}>
         {/* Logo */}
-        <Link href="/" className="flex items-center justify-center gap-2 mb-8">
-          <span style={{ fontSize: '1.75rem' }}>🏠</span>
-          <span className="font-bold text-2xl" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Mate</span>
-          </span>
+        <Link href="/" className="logo-container" style={{ justifyContent: 'center', marginBottom: '2rem' }}>
+          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
         </Link>
 
         {success ? (

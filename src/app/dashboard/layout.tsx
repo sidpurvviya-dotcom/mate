@@ -103,9 +103,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
       <div style={{ padding: '1.5rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
         <Link href="/" className="flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
           <span style={{ fontSize: '1.25rem' }}>🏠</span>
-          <span className="font-bold text-xl" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Mate</span>
-          </span>
+          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" style={{ height: '24px' }} />
         </Link>
         <ThemeToggle />
       </div>

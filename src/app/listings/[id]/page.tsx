@@ -81,11 +81,8 @@ export default function PropertyDetailPage() {
     <div className="min-h-screen" style={{ background: 'var(--bg-base)' }}>
       <nav className="navbar glass" style={{ justifyContent: 'space-between' }}>
         <Link href="/rooms" className="btn btn-ghost btn-sm">← Back to Rooms</Link>
-        <Link href="/" className="flex items-center gap-2">
-          <span style={{ fontSize: '1.25rem' }}>🏠</span>
-          <span className="font-bold" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Mate</span>
-          </span>
+        <Link href="/" className="logo-container">
+          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
         </Link>
         {mounted && user ? (
           <Link href="/dashboard" className="btn btn-secondary btn-sm">Dashboard</Link>

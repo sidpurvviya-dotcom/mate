@@ -12,11 +12,8 @@ export default function PostRequirement() {
     <div className="min-h-screen flex items-center justify-center p-4" style={{ background: 'var(--bg-base)' }}>
       <div className="card" style={{ maxWidth: 800, width: '100%', padding: '3rem' }}>
         <div className="text-center mb-10">
-          <Link href="/" className="inline-block mb-6">
-            <span style={{ fontSize: '2rem' }}>🏠</span>
-            <div className="font-bold text-2xl" style={{ fontFamily: 'Outfit' }}>
-              <span className="gradient-text">Mate</span>
-            </div>
+          <Link href="/" className="logo-container" style={{ justifyContent: 'center', marginBottom: '2rem' }}>
+            <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
           </Link>
           <h1 className="text-3xl font-bold mb-2">What are you looking for?</h1>
           <p className="text-secondary-color">Choose your path to get started</p>

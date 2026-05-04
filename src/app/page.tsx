@@ -211,11 +211,8 @@ export default function HomePage() {
         padding: '2rem 1.5rem',
         textAlign: 'center',
       }}>
-        <div className="flex items-center justify-center gap-2 mb-3">
-          <img src="/logo.svg" alt="Mate Logo" className="icon-mate" style={{ borderRadius: '0.375rem' }} />
-          <span className="font-bold" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Mate</span>
-          </span>
+        <div className="logo-container" style={{ justifyContent: 'center', padding: 0, marginBottom: '0.75rem' }}>
+          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
         </div>
         <p className="text-muted text-sm">
           © 2026 Mate. Built with ♥ for smarter house hunting.
