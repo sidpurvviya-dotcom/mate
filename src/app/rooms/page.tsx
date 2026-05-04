@@ -82,11 +82,8 @@ export default function RoomsPage() {
     <div className="min-h-screen" style={{ background: 'var(--bg-base)' }}>
       {/* Navbar */}
       <nav className="navbar glass" style={{ justifyContent: 'space-between' }}>
-        <Link href="/" className="flex items-center gap-2">
-          <span style={{ fontSize: '1.25rem' }}>🏠</span>
-          <span className="font-bold" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Mate</span>
-          </span>
+        <Link href="/" className="logo-container">
+          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
         </Link>
         {/* Desktop links */}
         <div className="hide-mobile items-center gap-2">

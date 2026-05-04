@@ -823,6 +823,26 @@ input[type="range"]::-webkit-slider-thumb {
   .filter-chip:active { background: rgba(99,102,241,0.2); }
 }
 
+/* ─── Global Logo Styling ─────────────────────────────────── */
+.logo-container {
+  display: flex;
+  align-items: center;
+  padding: 12px 16px;
+  z-index: 1000;
+}
+
+.mate-logo {
+  height: 40px;
+  width: auto;
+  transition: transform 0.2s ease-in-out;
+}
+
+.navbar {
+  position: sticky;
+  top: 0;
+  z-index: 999;
+}
+
 /* ─── Responsive adjustments for Mobile (max-width: 480px) ─────────────── */
 @media (max-width: 480px) {
   /* Specific Mobile Fixes for Mate Platform */
@@ -861,8 +881,16 @@ input[type="range"]::-webkit-slider-thumb {
   i, svg {
     transform: scale(0.85); /* Visually shrinks icons to prevent overcrowding */
   }
-  .navbar-logo { height: 32px !important; width: auto; }
   .theme-toggle, .menu-icon, .hamburger { transform: scale(0.85); }
+
+  /* Mobile Logo Shrink */
+  .logo-container {
+    padding: 10px 12px !important;
+    justify-content: flex-start;
+  }
+  .mate-logo {
+    height: 30px !important;
+  }
 
   /* 3. Icon & Navigation Styling */
   .bottom-nav, .mobile-bottom-nav {
@@ -1027,5 +1055,11 @@ input[type="range"]::-webkit-slider-thumb {
   /* 6. Navigation: Desktop Horizontal Bar */
   .bottom-nav, .mobile-bottom-nav {
     display: none !important;
+  }
+
+  /* PC Specific: Hover Effect */
+  .mate-logo:hover {
+    transform: scale(1.05);
+    cursor: pointer;
   }
 }

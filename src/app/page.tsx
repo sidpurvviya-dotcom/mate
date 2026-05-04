@@ -40,11 +40,8 @@ export default function HomePage() {
     <div className="min-h-screen">
       {/* Navbar */}
       <nav className={`navbar ${scrolled ? 'glass' : ''}`} style={{ justifyContent: 'space-between' }}>
-        <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Mate Logo" className="icon-mate navbar-logo" style={{ borderRadius: '0.5rem' }} />
-          <span className="font-bold text-xl" style={{ fontFamily: 'Outfit, sans-serif' }}>
-            <span className="gradient-text">Mate</span>
-          </span>
+        <Link href="/" className="logo-container">
+          <img src="/logo.svg" alt="Mate Logo" className="mate-logo" />
         </Link>
 
         {/* Desktop nav links */}
