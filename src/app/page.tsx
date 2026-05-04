@@ -127,12 +127,12 @@ export default function HomePage() {
       )}
 
       {/* Hero */}
-      <section className="hero-bg py-24" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
+      <section className="hero-bg py-24 hero-section" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
         <div className="container text-center">
           <div className="badge badge-primary mx-auto mb-6" style={{ display: 'inline-flex' }}>
             🚀 India&apos;s Smartest Roommate Platform
           </div>
-          <h1 className="text-center mb-6" style={{ fontSize: 'clamp(2rem, 7vw, 5rem)', fontWeight: 800, lineHeight: 1.1 }}>
+          <h1 className="text-center mb-6 hero-title" style={{ fontWeight: 800 }}>
             Find Your Perfect{' '}
             <span className="gradient-text">Roommate</span>
             <br />Not Just a Room
@@ -176,7 +176,7 @@ export default function HomePage() {
               <div key={f.title} className="card card-elevated" style={{ transition: 'var(--transition)' }}
                 onMouseEnter={(e) => (e.currentTarget.style.borderColor = 'var(--border-strong)')}
                 onMouseLeave={(e) => (e.currentTarget.style.borderColor = 'var(--border)')}>
-                <div style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{f.icon}</div>
+                <div className="feature-icon" style={{ fontSize: '2.5rem', marginBottom: '1rem' }}>{f.icon}</div>
                 <h3 className="text-lg font-semibold mb-2">{f.title}</h3>
                 <p className="text-secondary-color text-sm" style={{ lineHeight: 1.6 }}>{f.desc}</p>
               </div>

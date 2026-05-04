@@ -912,3 +912,65 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 1.1rem !important;
   }
 }
+
+/* ─── Beautiful PC Layout Optimization (min-width: 1024px) ─────────────── */
+@media (min-width: 1024px) {
+  /* Base Font Scaling for PC */
+  html {
+    font-size: 16px;
+  }
+
+  /* 1. Global Container: Centered with max-width for focus */
+  .container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 0 40px !important;
+  }
+
+  /* 2. Headline: Bold and Impactful */
+  h1.hero-title, .hero-title {
+    font-size: 3.5rem !important;
+    line-height: 1.1 !important;
+    margin-bottom: 24px !important;
+    text-align: left !important;
+  }
+
+  /* Hero Section Alignment fixes for Left Align on PC */
+  .hero-section .container { text-align: left !important; }
+  .hero-section p { margin-left: 0 !important; margin-right: auto !important; }
+  .hero-section .badge { margin-left: 0 !important; margin-right: auto !important; display: inline-flex !important; }
+  .hero-buttons { justify-content: flex-start !important; }
+
+  /* 3. Spacing: The "Whitespace" Rule */
+  section {
+    padding: 80px 0;
+  }
+
+  /* 4. Icons: Interactive and Sized for Precision */
+  .navbar-icon, .feature-icon {
+    display: inline-block;
+    transition: transform 0.3s ease, color 0.3s ease;
+  }
+  .navbar-icon:hover, .feature-icon:hover {
+    transform: translateY(-3px);
+    color: #3b82f6;
+  }
+
+  /* 5. Grid Layout: Multi-column view */
+  .stats-grid, .stats-container {
+    display: flex !important;
+    justify-content: space-between !important;
+    gap: 32px !important;
+  }
+  .stat-card {
+    flex: 1;
+    padding: 40px !important;
+    border-radius: 16px !important;
+    box-shadow: 0 10px 25px rgba(0,0,0,0.05) !important;
+  }
+
+  /* 6. Navigation: Desktop Horizontal Bar */
+  .bottom-nav, .mobile-bottom-nav {
+    display: none !important;
+  }
+}
