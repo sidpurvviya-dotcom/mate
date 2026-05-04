@@ -825,22 +825,32 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ─── Responsive adjustments for Mobile (max-width: 480px) ─────────────── */
 @media (max-width: 480px) {
-  /* Shrink the Global Padding */
-  .container {
-    padding-left: 12px !important;
-    padding-right: 12px !important;
+  /* Specific Mobile Fixes for Mate Platform */
+  
+  /* Shrink Global Fonts */
+  html {
+    font-size: 14px; /* Sets a smaller base size for the entire phone screen */
   }
 
   /* Fix Home Page Headline */
   h1, .hero-title {
-    font-size: clamp(1.5rem, 6vw, 2rem) !important;
+    font-size: 1.8rem !important; /* Forces the large title to fit the phone width */
     line-height: 1.2 !important;
     padding: 0 10px;
   }
 
-  /* Shrink the Logo and Header Icons */
-  .navbar-logo { height: 32px !important; width: auto; }
-  .theme-toggle, .menu-icon, .hamburger { transform: scale(0.85); }
+  /* Shrink All Icons */
+  i, svg {
+    transform: scale(0.85); /* Visually shrinks icons to prevent overcrowding */
+  }
+
+  /* Fix Container Visibility */
+  .container, .card, .hero-section {
+    width: 100% !important;
+    max-width: 100vw !important;
+    padding: 0 12px !important; /* Adds safe breathing room on the edges */
+    box-sizing: border-box;
+  }
 
   /* Fit the Action Buttons */
   .hero-buttons {
@@ -891,10 +901,10 @@ input[type="range"]::-webkit-slider-thumb {
   }
 
   /* Bottom Navigation */
-  .bottom-nav-item, .mobile-tab-btn {
+  .bottom-nav-item, .mobile-tab-btn, .bottom-nav {
     padding: 5px !important;
   }
-  .bottom-nav-label {
+  .bottom-nav-label, .bottom-nav span {
     font-size: 10px !important;
     letter-spacing: -0.2px;
   }
