@@ -5,7 +5,6 @@ import Link from 'next/link'
 import { useAuthStore } from '@/store/authStore'
 import ThemeToggle from '@/components/ThemeToggle'
 
-
 const NAV_ITEMS = [
   { href: '/dashboard', label: 'Overview', emoji: '📊' },
   { href: '/dashboard/profile', label: 'My Profile', emoji: '👤' },
@@ -16,6 +15,14 @@ const NAV_ITEMS = [
   { href: '/dashboard/inquiries', label: 'Inquiries', emoji: '📨' },
   { href: '/rooms', label: 'Browse Rooms', emoji: '🏠' },
   { href: '/roommates', label: 'Find Roommates', emoji: '👥' },
+]
+
+// Bottom tab items (most important 5 for mobile)
+const BOTTOM_TABS = [
+  { href: '/dashboard', label: 'Home', emoji: '📊' },
+  { href: '/dashboard/my-listings', label: 'Listings', emoji: '📋' },
+  { href: '/dashboard/messages', label: 'Messages', emoji: '💬' },
+  { href: '/dashboard/profile', label: 'Profile', emoji: '👤' },
 ]
 
 export default function DashboardLayout({ children }: { children: React.ReactNode }) {
@@ -29,20 +36,16 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
   const [updating, setUpdating] = useState(false)
   const [updateError, setUpdateError] = useState('')
   const [syncing, setSyncing] = useState(true)
+  const [drawerOpen, setDrawerOpen] = useState(false)
 
   useEffect(() => {
     async function syncAuth() {
-      if (user) {
-        setSyncing(false)
-        return
-      }
-
+      if (user) { setSyncing(false); return }
       try {
         const res = await fetch('/api/users/me')
         if (res.ok) {
           const data = await res.json()
-          // Use an empty string for token since it's already in the cookie
-          setAuth(data.user, '') 
+          setAuth(data.user, '')
         } else {
           router.push('/auth/login')
         }
@@ -53,9 +56,11 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         setSyncing(false)
       }
     }
-
     syncAuth()
   }, [user, router, setAuth])
+
+  // Close drawer on route change
+  useEffect(() => { setDrawerOpen(false) }, [pathname])
 
   if (syncing) {
     return (
@@ -92,112 +97,140 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     }
   }
 
-  const allItems = NAV_ITEMS
+  const SidebarContent = () => (
+    <>
+      {/* Logo */}
+      <div style={{ padding: '1.5rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+        <Link href="/" className="flex items-center gap-2" onClick={() => setDrawerOpen(false)}>
+          <span style={{ fontSize: '1.25rem' }}>🏠</span>
+          <span className="font-bold text-xl" style={{ fontFamily: 'Outfit' }}>
+            <span className="gradient-text">Mate</span>
+          </span>
+        </Link>
+        <ThemeToggle />
+      </div>
+
+      {/* User info */}
+      <div style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}>
+        <div className="flex items-center gap-3">
+          <div className="avatar avatar-md">
+            {user.avatar ? <img src={user.avatar} alt={user.name} className="avatar avatar-md" style={{ borderRadius: '50%', objectFit: 'cover' }} /> : user.name[0]}
+          </div>
+          <div style={{ overflow: 'hidden', flex: 1 }}>
+            <div className="font-medium text-sm truncate flex items-center justify-between gap-1">
+              <span className="truncate">{user.name}</span>
+              <button
+                className="btn btn-ghost btn-icon"
+                style={{ padding: '2px', minHeight: 'auto', borderRadius: '4px' }}
+                onClick={() => {
+                  setAvatarUrl(user.avatar || '')
+                  setBio(user.bio || '')
+                  setShowEditModal(true)
+                }}
+                title="Edit Profile Summary"
+              >
+                ✏️
+              </button>
+            </div>
+            <div className="text-xs text-muted truncate">{user.email}</div>
+            {user.bio && <div className="text-xs text-muted truncate mt-1" style={{ fontStyle: 'italic' }}>"{user.bio}"</div>}
+            <div className="badge badge-primary" style={{ marginTop: 6, fontSize: '0.65rem', padding: '2px 6px' }}>
+              ⭐ Member
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Nav */}
+      <nav style={{ flex: 1, padding: '0.75rem 0', overflowY: 'auto' }}>
+        {NAV_ITEMS.map((item) => (
+          <Link key={item.href} href={item.href}
+            className={`sidebar-item ${pathname === item.href ? 'active' : ''}`}
+            onClick={() => setDrawerOpen(false)}>
+            <span>{item.emoji}</span>
+            <span>{item.label}</span>
+          </Link>
+        ))}
+      </nav>
+
+      {/* Logout */}
+      <div style={{ padding: '1rem', borderTop: '1px solid var(--border)' }}>
+        <button className="sidebar-item w-full" onClick={handleLogout}
+          style={{ color: 'var(--danger)', width: '100%', textAlign: 'left' }}>
+          <span>🚪</span> <span>Sign Out</span>
+        </button>
+      </div>
+    </>
+  )
 
   return (
     <div className="flex" style={{ minHeight: '100vh', background: 'var(--bg-base)' }}>
-      {/* Sidebar */}
+      {/* ── Desktop Sidebar ── */}
       <aside className="sidebar">
-        {/* Logo */}
-        <div style={{ padding: '1.5rem 1rem', borderBottom: '1px solid var(--border)', display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
-          <Link href="/" className="flex items-center gap-2">
-            <span style={{ fontSize: '1.25rem' }}>🏠</span>
-            <span className="font-bold text-xl" style={{ fontFamily: 'Outfit' }}>
-              <span className="gradient-text">Mate</span>
-            </span>
+        <SidebarContent />
+      </aside>
+
+      {/* ── Mobile Drawer ── */}
+      {drawerOpen && (
+        <>
+          <div className="mobile-drawer-overlay" onClick={() => setDrawerOpen(false)} />
+          <div className="mobile-drawer">
+            <SidebarContent />
+          </div>
+        </>
+      )}
+
+      {/* ── Main content ── */}
+      <main style={{ flex: 1, overflow: 'auto', minWidth: 0 }}>
+        {/* Mobile top bar (hidden on desktop via show-mobile / hide-mobile) */}
+        <div className="navbar glass show-mobile" style={{ justifyContent: 'space-between' }}>
+          <button
+            className={`hamburger ${drawerOpen ? 'open' : ''}`}
+            onClick={() => setDrawerOpen(!drawerOpen)}
+            aria-label="Open menu"
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+          <Link href="/" className="font-bold" style={{ fontFamily: 'Outfit' }}>
+            <span className="gradient-text">Mate</span>
           </Link>
           <ThemeToggle />
         </div>
 
-        {/* User info */}
-        <div style={{ padding: '1rem', borderBottom: '1px solid var(--border)' }}>
-          <div className="flex items-center gap-3">
-            <div className="avatar avatar-md">
-              {user.avatar ? <img src={user.avatar} alt={user.name} className="avatar avatar-md" style={{ borderRadius: '50%', objectFit: 'cover' }} /> : user.name[0]}
-            </div>
-            <div style={{ overflow: 'hidden', flex: 1 }}>
-              <div className="font-medium text-sm truncate flex items-center justify-between gap-1">
-                <span className="truncate">{user.name}</span>
-                <button 
-                  className="btn btn-ghost btn-icon" 
-                  style={{ padding: '2px', minHeight: 'auto', borderRadius: '4px' }} 
-                  onClick={() => {
-                    setAvatarUrl(user.avatar || '')
-                    setBio(user.bio || '')
-                    setShowEditModal(true)
-                  }}
-                  title="Edit Profile Summary"
-                >
-                  ✏️
-                </button>
-              </div>
-              <div className="text-xs text-muted truncate">{user.email}</div>
-              {user.bio && <div className="text-xs text-muted truncate mt-1" style={{ fontStyle: 'italic' }}>"{user.bio}"</div>}
-              <div className="badge badge-primary" style={{ marginTop: 6, fontSize: '0.65rem', padding: '2px 6px' }}>
-                ⭐ Member
-              </div>
-            </div>
-          </div>
+        {/* Page content */}
+        <div className="dashboard-main-content">
+          {children}
         </div>
-
-        {/* Nav */}
-        <nav style={{ flex: 1, padding: '0.75rem 0' }}>
-          {allItems.map((item) => (
-            <Link key={item.href} href={item.href}
-              className={`sidebar-item ${pathname === item.href ? 'active' : ''}`}>
-              <span>{item.emoji}</span>
-              <span>{item.label}</span>
-            </Link>
-          ))}
-        </nav>
-
-        {/* Logout */}
-        <div style={{ padding: '1rem', borderTop: '1px solid var(--border)' }}>
-          <button className="sidebar-item w-full" onClick={handleLogout}
-            style={{ color: 'var(--danger)', width: '100%', textAlign: 'left' }}>
-            <span>🚪</span> <span>Sign Out</span>
-          </button>
-        </div>
-      </aside>
-
-      {/* Main */}
-      <main style={{ flex: 1, overflow: 'auto' }}>
-        {/* Mobile nav */}
-        <div className="navbar glass" style={{ justifyContent: 'space-between', display: 'none' }}
-          id="mobile-nav">
-          <Link href="/" className="font-bold" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Mate</span>
-          </Link>
-        </div>
-        {children}
 
         {/* Quick Edit Modal */}
         {showEditModal && (
           <div className="modal-overlay" onClick={() => setShowEditModal(false)}>
             <div className="modal-content" onClick={e => e.stopPropagation()}>
               <h2 className="font-bold text-xl mb-4">Update Profile Summary</h2>
-              
+
               {updateError && <div className="alert alert-error mb-4">{updateError}</div>}
-              
+
               <div className="form-group mb-4">
                 <label className="form-label">Profile Picture</label>
                 <div className="flex flex-col gap-3">
                   {avatarUrl && (
                     <div className="flex justify-center mb-1">
-                      <img 
-                        src={avatarUrl} 
-                        alt="Avatar Preview" 
-                        style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }} 
+                      <img
+                        src={avatarUrl}
+                        alt="Avatar Preview"
+                        style={{ width: 72, height: 72, borderRadius: '50%', objectFit: 'cover', border: '2px solid var(--primary)' }}
                       />
                     </div>
                   )}
-                  
+
                   <div style={{ position: 'relative' }}>
-                    <input 
-                      type="file" 
-                      accept="image/*" 
+                    <input
+                      type="file"
+                      accept="image/*"
                       id="avatar-upload"
-                      style={{ display: 'none' }} 
+                      style={{ display: 'none' }}
                       onChange={(e) => {
                         const file = e.target.files?.[0]
                         if (file) {
@@ -209,8 +242,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                         }
                       }}
                     />
-                    <label 
-                      htmlFor="avatar-upload" 
+                    <label
+                      htmlFor="avatar-upload"
                       className="btn btn-secondary w-full flex items-center justify-center gap-2"
                       style={{ cursor: 'pointer' }}
                     >
@@ -224,30 +257,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
                     <div style={{ height: '1px', background: 'var(--border)', flex: 1 }} />
                   </div>
 
-                  <input 
-                    className="form-input" 
-                    placeholder="Paste direct image link (e.g. https://...)" 
-                    value={avatarUrl.startsWith('data:') ? 'Uploaded local image file' : avatarUrl} 
+                  <input
+                    className="form-input"
+                    placeholder="Paste direct image link (e.g. https://...)"
+                    value={avatarUrl.startsWith('data:') ? 'Uploaded local image file' : avatarUrl}
                     onChange={e => {
                       if (e.target.value !== 'Uploaded local image file') {
                         setAvatarUrl(e.target.value)
                       }
-                    }} 
+                    }}
                   />
                 </div>
               </div>
-              
+
               <div className="form-group mb-6">
                 <label className="form-label">Bio</label>
-                <textarea 
-                  className="form-textarea" 
-                  placeholder="Short bio displayed in sidebar..." 
-                  value={bio} 
+                <textarea
+                  className="form-textarea"
+                  placeholder="Short bio displayed in sidebar..."
+                  value={bio}
                   onChange={e => setBio(e.target.value)}
                   style={{ minHeight: 80 }}
                 />
               </div>
-              
+
               <div className="flex gap-3">
                 <button className="btn btn-secondary" style={{ flex: 1 }} onClick={() => setShowEditModal(false)}>
                   Cancel
@@ -260,6 +293,30 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
           </div>
         )}
       </main>
+
+      {/* ── Mobile Bottom Tab Bar ── */}
+      <nav className="mobile-bottom-nav" aria-label="Mobile navigation">
+        <div className="mobile-bottom-nav-inner">
+          {BOTTOM_TABS.map((tab) => (
+            <Link
+              key={tab.href}
+              href={tab.href}
+              className={`mobile-tab-btn ${pathname === tab.href ? 'active' : ''}`}
+            >
+              <span className="tab-icon">{tab.emoji}</span>
+              <span>{tab.label}</span>
+            </Link>
+          ))}
+          <button
+            className="mobile-tab-btn"
+            onClick={handleLogout}
+            style={{ color: 'var(--danger)' }}
+          >
+            <span className="tab-icon">🚪</span>
+            <span>Logout</span>
+          </button>
+        </div>
+      </nav>
     </div>
   )
 }

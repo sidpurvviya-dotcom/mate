@@ -238,6 +238,8 @@ export default function RoommatesPage() {
   const [seekers, setSeekers] = useState<Seeker[]>([])
   const [loading, setLoading] = useState(true)
   const [total, setTotal] = useState(0)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
+  const [filtersOpen, setFiltersOpen] = useState(false)
   const [filters, setFilters] = useState({
     city: '', lifestyle: '', workSchedule: '',
     maxBudget: '', smokingOk: false, petsOk: false,
@@ -252,7 +254,10 @@ export default function RoommatesPage() {
       if (filters.city && filters.city !== 'All Cities') params.set('city', filters.city)
       if (filters.lifestyle) params.set('lifestyle', filters.lifestyle)
       if (filters.workSchedule) params.set('workSchedule', filters.workSchedule)
-      if (filters.maxBudget) params.set('maxBudget', filters.maxBudget)
+      if (filters.maxBudget) {
+        const cleanBudget = filters.maxBudget.replace(/\D/g, '')
+        if (cleanBudget) params.set('maxBudget', cleanBudget)
+      }
       if (filters.smokingOk) params.set('smokingOk', 'true')
       if (filters.petsOk) params.set('petsOk', 'true')
 
@@ -285,7 +290,8 @@ export default function RoommatesPage() {
             <span className="gradient-text">Mate</span>
           </span>
         </Link>
-        <div className="flex items-center gap-2">
+        {/* Desktop links */}
+        <div className="hide-mobile items-center gap-2">
           <Link href="/rooms" className="btn btn-ghost btn-sm">🏠 Rooms</Link>
           <Link href="/roommates" className="btn btn-sm" style={{
             background: 'rgba(139,92,246,0.15)', color: '#c4b5fd',
@@ -294,11 +300,48 @@ export default function RoommatesPage() {
           {mounted && user ? (
             <Link href="/dashboard" className="btn btn-primary btn-sm">My Profile</Link>
           ) : mounted ? (
-              <Link href="/auth/login" className="btn btn-primary btn-sm">Sign In</Link>
+            <Link href="/auth/login" className="btn btn-primary btn-sm">Sign In</Link>
           ) : null}
           <ThemeToggle />
         </div>
+        {/* Mobile hamburger */}
+        <div className="show-mobile items-center gap-2">
+          <ThemeToggle />
+          <button
+            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile dropdown */}
+      {mobileMenuOpen && (
+        <>
+          <div style={{ position: 'fixed', inset: 0, zIndex: 90 }} onClick={() => setMobileMenuOpen(false)} />
+          <div style={{
+            position: 'fixed', top: 64, left: 0, right: 0,
+            background: 'var(--bg-surface)', border: '1px solid var(--border)',
+            borderTop: 'none', zIndex: 91, padding: '1rem',
+            display: 'flex', flexDirection: 'column', gap: '0.5rem',
+            animation: 'fadeIn 0.2s ease',
+          }}>
+            <Link href="/rooms" className="btn btn-ghost w-full" style={{ justifyContent: 'flex-start' }}
+              onClick={() => setMobileMenuOpen(false)}>🏠 Rooms</Link>
+            <Link href="/roommates" className="btn btn-ghost w-full" style={{ justifyContent: 'flex-start' }}
+              onClick={() => setMobileMenuOpen(false)}>👥 Roommates</Link>
+            {mounted && user ? (
+              <Link href="/dashboard" className="btn btn-secondary w-full" onClick={() => setMobileMenuOpen(false)}>My Profile</Link>
+            ) : (
+              <Link href="/auth/login" className="btn btn-primary w-full" onClick={() => setMobileMenuOpen(false)}>Sign In</Link>
+            )}
+          </div>
+        </>
+      )}
 
       {/* Hero banner */}
       <div style={{
@@ -321,11 +364,10 @@ export default function RoommatesPage() {
           </div>
 
           {/* City quick-filter pills */}
-          <div className="flex gap-2 mt-4 overflow-x-auto pb-2 scrollbar-hidden" style={{ flexWrap: 'nowrap', WebkitOverflowScrolling: 'touch' }}>
+          <div className="flex gap-2 mt-4 flex-wrap pb-2">
             {CITIES.map((c) => (
               <button key={c}
                 className={`filter-chip ${filters.city === (c === 'All Cities' ? '' : c) ? 'active' : ''}`}
-                style={{ flexShrink: 0 }}
                 onClick={() => {
                   setFilters({ ...filters, city: c === 'All Cities' ? '' : c })
                 }}>
@@ -338,63 +380,68 @@ export default function RoommatesPage() {
 
       <div className="container py-6">
         {/* Filters bar */}
-        <div className="card mb-6" style={{ padding: '1rem 1.5rem' }}>
-          <div className="flex flex-wrap gap-3 items-end">
-            <div className="form-group" style={{ minWidth: 220, zIndex: 10 }}>
-              <label className="form-label">City</label>
-              <CitySearchSelect
-                value={filters.city}
-                onChange={(city) => {
-                  setFilters({ ...filters, city })
-                }}
-              />
-            </div>
-            <div className="form-group" style={{ minWidth: 160 }}>
-              <label className="form-label">Lifestyle</label>
-              <select className="form-select" value={filters.lifestyle}
-                onChange={(e) => {
-                  setFilters({ ...filters, lifestyle: e.target.value })
-                }}>
-                {LIFESTYLE_OPTIONS.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
-              </select>
-            </div>
-            <div className="form-group" style={{ minWidth: 160 }}>
-              <label className="form-label">Work Schedule</label>
-              <select className="form-select" value={filters.workSchedule}
-                onChange={(e) => {
-                  setFilters({ ...filters, workSchedule: e.target.value })
-                }}>
-                {SCHEDULE_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
-              </select>
-            </div>
-            <div className="form-group" style={{ minWidth: 130 }}>
-              <label className="form-label">Max Budget (₹)</label>
-              <input type="number" className="form-input" placeholder="50,000"
-                value={filters.maxBudget}
-                onChange={(e) => {
-                  setFilters({ ...filters, maxBudget: e.target.value })
-                }} />
-            </div>
-            <div className="flex gap-2 flex-wrap" style={{ paddingBottom: '0.1rem' }}>
-              {[
-                { key: 'petsOk', label: '🐾 Pet Friendly' },
-                { key: 'smokingOk', label: '🚬 Smoking OK' },
-              ].map(({ key, label }) => (
-                <button key={key}
-                  className={`filter-chip ${(filters as any)[key] ? 'active' : ''}`}
-                  onClick={() => {
-                    setFilters({ ...filters, [key]: !(filters as any)[key] })
+        <div className="mb-6">
+          <div className="card" style={{ padding: '1rem 1.5rem' }}>
+            <div className="flex flex-wrap gap-3 items-end">
+              <div className="form-group" style={{ flex: '1 0 min(100%, 220px)', zIndex: 10 }}>
+                <label className="form-label">City</label>
+                <CitySearchSelect
+                  value={filters.city}
+                  onChange={(city) => {
+                    setFilters({ ...filters, city })
+                  }}
+                />
+              </div>
+              <div className="form-group" style={{ flex: '1 0 min(100%, 160px)' }}>
+                <label className="form-label">Lifestyle</label>
+                <select className="form-select" value={filters.lifestyle}
+                  onChange={(e) => {
+                    setFilters({ ...filters, lifestyle: e.target.value })
                   }}>
-                  {label}
-                </button>
-              ))}
+                  {LIFESTYLE_OPTIONS.map(l => <option key={l.value} value={l.value}>{l.label}</option>)}
+                </select>
+              </div>
+              <div className="form-group" style={{ flex: '1 0 min(100%, 160px)' }}>
+                <label className="form-label">Work Schedule</label>
+                <select className="form-select" value={filters.workSchedule}
+                  onChange={(e) => {
+                    setFilters({ ...filters, workSchedule: e.target.value })
+                  }}>
+                  {SCHEDULE_OPTIONS.map(s => <option key={s.value} value={s.value}>{s.label}</option>)}
+                </select>
+              </div>
+              <div className="form-group" style={{ flex: '1 0 min(100%, 130px)' }}>
+                <label className="form-label">Max Budget (₹)</label>
+                <input type="text" inputMode="numeric" className="form-input" placeholder="50,000"
+                  value={filters.maxBudget}
+                  onChange={(e) => {
+                    const val = e.target.value.replace(/[^\d,]/g, '');
+                    setFilters({ ...filters, maxBudget: val })
+                  }} />
+              </div>
+              <div className="flex justify-between items-center w-full mt-2 pt-2" style={{ borderTop: '1px solid var(--border)' }}>
+                <div className="flex gap-2 flex-wrap">
+                  {[
+                    { key: 'petsOk', label: '🐾 Pet Friendly' },
+                    { key: 'smokingOk', label: '🚬 Smoking OK' },
+                  ].map(({ key, label }) => (
+                    <button key={key}
+                      className={`filter-chip ${(filters as any)[key] ? 'active' : ''}`}
+                      onClick={() => {
+                        setFilters({ ...filters, [key]: !(filters as any)[key] })
+                      }}>
+                      {label}
+                    </button>
+                  ))}
+                </div>
+                <button className="btn btn-ghost btn-sm" onClick={() => {
+                  setFilters({
+                    city: '', lifestyle: '', workSchedule: '',
+                    maxBudget: '', smokingOk: false, petsOk: false,
+                  })
+                }}>✕ Clear</button>
+              </div>
             </div>
-            <button className="btn btn-ghost btn-sm" onClick={() => {
-              setFilters({
-                city: '', lifestyle: '', workSchedule: '',
-                maxBudget: '', smokingOk: false, petsOk: false,
-              })
-            }}>✕ Clear</button>
           </div>
         </div>
 

@@ -27,6 +27,7 @@ export default function HomePage() {
   const router = useRouter()
   const [scrolled, setScrolled] = useState(false)
   const [mounted, setMounted] = useState(false)
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   useEffect(() => {
     setMounted(true)
@@ -40,26 +41,90 @@ export default function HomePage() {
       {/* Navbar */}
       <nav className={`navbar ${scrolled ? 'glass' : ''}`} style={{ justifyContent: 'space-between' }}>
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.png" alt="Mate Logo" style={{ width: '2rem', height: '2rem', borderRadius: '0.5rem', objectFit: 'cover' }} />
+          <img src="/logo.svg" alt="Mate Logo" className="icon-mate" style={{ borderRadius: '0.5rem' }} />
           <span className="font-bold text-xl" style={{ fontFamily: 'Outfit, sans-serif' }}>
             <span className="gradient-text">Mate</span>
           </span>
         </Link>
 
-        <div className="flex items-center gap-3">
-          <Link href="/rooms" className="btn btn-ghost btn-sm hide-mobile">🏠 Rooms</Link>
-          <Link href="/roommates" className="btn btn-ghost btn-sm hide-mobile">👥 Roommates</Link>
+        {/* Desktop nav links */}
+        <div className="hide-mobile items-center gap-3">
+          <Link href="/rooms" className="btn btn-ghost btn-sm">🏠 Rooms</Link>
+          <Link href="/roommates" className="btn btn-ghost btn-sm">👥 Roommates</Link>
           {mounted && user ? (
             <>
               <Link href="/dashboard" className="btn btn-secondary btn-sm">My Profile</Link>
               <Link href="/dashboard/messages" className="btn btn-primary btn-sm">Messages</Link>
             </>
-          ) : mounted ? (
-              <Link href="/auth/login" className="btn btn-primary btn-sm">Sign In</Link>
-          ) : null}
+          ) : (
+            <Link href="/auth/login" className="btn btn-primary btn-sm">Sign In</Link>
+          )}
           <ThemeToggle />
         </div>
+
+        {/* Mobile: theme + hamburger */}
+        <div className="show-mobile items-center gap-2">
+          <ThemeToggle />
+          <button
+            className={`hamburger ${mobileMenuOpen ? 'open' : ''}`}
+            onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+            aria-label="Toggle menu"
+          >
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+            <span className="hamburger-line" />
+          </button>
+        </div>
       </nav>
+
+      {/* Mobile dropdown menu */}
+      {mobileMenuOpen && (
+        <>
+          <div
+            style={{
+              position: 'fixed', inset: 0, zIndex: 90,
+              background: 'transparent',
+            }}
+            onClick={() => setMobileMenuOpen(false)}
+          />
+          <div style={{
+            position: 'fixed', top: 64, left: 0, right: 0,
+            background: 'var(--bg-surface)',
+            border: '1px solid var(--border)',
+            borderTop: 'none',
+            zIndex: 91,
+            padding: '1rem',
+            display: 'flex', flexDirection: 'column', gap: '0.5rem',
+            animation: 'fadeIn 0.2s ease',
+          }}>
+            <Link href="/rooms" className="btn btn-ghost w-full" style={{ justifyContent: 'flex-start' }}
+              onClick={() => setMobileMenuOpen(false)}>
+              🏠 Browse Rooms
+            </Link>
+            <Link href="/roommates" className="btn btn-ghost w-full" style={{ justifyContent: 'flex-start' }}
+              onClick={() => setMobileMenuOpen(false)}>
+              👥 Find Roommates
+            </Link>
+            {mounted && user ? (
+              <>
+                <Link href="/dashboard" className="btn btn-secondary w-full"
+                  onClick={() => setMobileMenuOpen(false)}>
+                  My Profile
+                </Link>
+                <Link href="/dashboard/messages" className="btn btn-primary w-full"
+                  onClick={() => setMobileMenuOpen(false)}>
+                  Messages
+                </Link>
+              </>
+            ) : (
+              <Link href="/auth/login" className="btn btn-primary w-full"
+                onClick={() => setMobileMenuOpen(false)}>
+                Sign In
+              </Link>
+            )}
+          </div>
+        </>
+      )}
 
       {/* Hero */}
       <section className="hero-bg py-24" style={{ minHeight: '90vh', display: 'flex', alignItems: 'center' }}>
@@ -67,7 +132,7 @@ export default function HomePage() {
           <div className="badge badge-primary mx-auto mb-6" style={{ display: 'inline-flex' }}>
             🚀 India&apos;s Smartest Roommate Platform
           </div>
-          <h1 className="text-center mb-6" style={{ fontSize: 'clamp(2.5rem, 6vw, 5rem)', fontWeight: 800, lineHeight: 1.1 }}>
+          <h1 className="text-center mb-6" style={{ fontSize: 'clamp(2rem, 7vw, 5rem)', fontWeight: 800, lineHeight: 1.1 }}>
             Find Your Perfect{' '}
             <span className="gradient-text">Roommate</span>
             <br />Not Just a Room
@@ -126,7 +191,7 @@ export default function HomePage() {
           <div className="card text-center" style={{
             background: 'linear-gradient(135deg, rgba(99,102,241,0.2), rgba(139,92,246,0.1))',
             border: '1px solid var(--border-strong)',
-            padding: '4rem 2rem',
+            padding: 'clamp(2rem, 6vw, 4rem) clamp(1rem, 4vw, 2rem)',
             borderRadius: 'var(--radius-xl)',
           }}>
             <h2 className="text-3xl font-bold mb-4">
@@ -150,7 +215,7 @@ export default function HomePage() {
         textAlign: 'center',
       }}>
         <div className="flex items-center justify-center gap-2 mb-3">
-          <img src="/logo.png" alt="Mate Logo" style={{ width: '1.5rem', height: '1.5rem', borderRadius: '0.375rem', objectFit: 'cover' }} />
+          <img src="/logo.svg" alt="Mate Logo" className="icon-mate" style={{ borderRadius: '0.375rem' }} />
           <span className="font-bold" style={{ fontFamily: 'Outfit' }}>
             <span className="gradient-text">Mate</span>
           </span>

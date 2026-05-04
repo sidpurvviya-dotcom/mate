@@ -1,9 +1,19 @@
 'use client'
 import { useTheme } from './ThemeProvider'
 import { Sun, Moon } from 'lucide-react'
+import { useState, useEffect } from 'react'
 
 export default function ThemeToggle() {
   const { theme, toggleTheme } = useTheme()
+  const [mounted, setMounted] = useState(false)
+
+  useEffect(() => setMounted(true), [])
+
+  if (!mounted) {
+    return (
+      <button className="btn btn-ghost btn-icon" style={{ padding: '0.5rem', borderRadius: '50%', width: 36, height: 36 }} aria-hidden="true" />
+    )
+  }
 
   return (
     <button
