@@ -825,35 +825,50 @@ input[type="range"]::-webkit-slider-thumb {
 
 /* ─── Responsive adjustments for Mobile (max-width: 480px) ─────────────── */
 @media (max-width: 480px) {
-  /* 1. Fix Home Page Headline */
+  /* Shrink the Global Padding */
+  .container {
+    padding-left: 12px !important;
+    padding-right: 12px !important;
+  }
+
+  /* Fix Home Page Headline */
   h1, .hero-title {
-    font-size: 1.8rem !important;
+    font-size: clamp(1.5rem, 6vw, 2rem) !important;
     line-height: 1.2 !important;
     padding: 0 10px;
   }
 
-  /* 2. Fix the "Browse Rooms" & "Find Roommate" buttons */
-  .action-buttons {
+  /* Shrink the Logo and Header Icons */
+  .navbar-logo { height: 32px !important; width: auto; }
+  .theme-toggle, .menu-icon, .hamburger { transform: scale(0.85); }
+
+  /* Fit the Action Buttons */
+  .hero-buttons {
+    display: flex !important;
     flex-direction: column !important;
     gap: 10px;
+    width: 100%;
   }
-  .action-buttons .btn {
+  .hero-buttons .btn {
     width: 100% !important;
   }
 
-  /* 3. Fix the Statistics Cards (2,400+ and 98%) */
-  .stats-grid {
+  /* Shrink Stats Cards to fit 2-per-row */
+  .stats-container {
     display: grid !important;
-    grid-template-columns: 1fr 1fr !important;
+    grid-template-columns: repeat(2, 1fr) !important;
     gap: 8px !important;
     padding: 0 10px;
   }
+  
   .stat-card {
     min-width: unset !important;
     padding: 15px 5px !important;
   }
+  .stat-card h2 { font-size: 1.2rem !important; margin: 0; }
+  .stat-card p { font-size: 0.75rem !important; margin: 0; }
 
-  /* 4. Fix Browse Page Filters (Cities & Rent) */
+  /* Browse Page Filters */
   .filter-row {
     flex-direction: column !important;
     align-items: stretch !important;
@@ -875,17 +890,15 @@ input[type="range"]::-webkit-slider-thumb {
     display: none;
   }
 
-  /* 5. Fix Navigation Bar (Bottom) */
-  .mobile-tab-btn {
+  /* Bottom Navigation */
+  .bottom-nav-item, .mobile-tab-btn {
+    padding: 5px !important;
+  }
+  .bottom-nav-label {
     font-size: 10px !important;
+    letter-spacing: -0.2px;
   }
   .mobile-tab-btn .tab-icon {
-    font-size: 1.1rem !important; /* Scaled down ~15% from 1.3rem */
-  }
-
-  /* The 15px Rule */
-  .container {
-    padding-left: 15px !important;
-    padding-right: 15px !important;
+    font-size: 1.1rem !important;
   }
 }

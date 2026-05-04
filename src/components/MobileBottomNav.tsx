@@ -16,27 +16,27 @@ export default function MobileBottomNav() {
   return (
     <nav className="mobile-bottom-nav">
       <div className="mobile-bottom-nav-inner container">
-        <Link href="/" className={`mobile-tab-btn ${pathname === '/' ? 'active' : ''}`}>
+        <Link href="/" className={`mobile-tab-btn bottom-nav-item ${pathname === '/' ? 'active' : ''}`}>
           <span className="tab-icon">🏠</span>
-          Home
+          <span className="bottom-nav-label">Home</span>
         </Link>
-        <Link href="/rooms" className={`mobile-tab-btn ${pathname === '/rooms' ? 'active' : ''}`}>
+        <Link href="/rooms" className={`mobile-tab-btn bottom-nav-item ${pathname === '/rooms' ? 'active' : ''}`}>
           <span className="tab-icon">🔍</span>
-          Search
+          <span className="bottom-nav-label">Search</span>
         </Link>
-        <Link href="/roommates" className={`mobile-tab-btn ${pathname === '/roommates' ? 'active' : ''}`}>
+        <Link href="/roommates" className={`mobile-tab-btn bottom-nav-item ${pathname === '/roommates' ? 'active' : ''}`}>
           <span className="tab-icon">👥</span>
-          Mates
+          <span className="bottom-nav-label">Mates</span>
         </Link>
         {user ? (
-          <Link href="/dashboard" className={`mobile-tab-btn ${pathname?.startsWith('/dashboard') ? 'active' : ''}`}>
+          <Link href="/dashboard" className={`mobile-tab-btn bottom-nav-item ${pathname?.startsWith('/dashboard') ? 'active' : ''}`}>
             <span className="tab-icon">👤</span>
-            Profile
+            <span className="bottom-nav-label">Profile</span>
           </Link>
         ) : (
-          <Link href="/auth/login" className={`mobile-tab-btn ${pathname?.startsWith('/auth') ? 'active' : ''}`}>
+          <Link href="/auth/login" className={`mobile-tab-btn bottom-nav-item ${pathname?.startsWith('/auth') ? 'active' : ''}`}>
             <span className="tab-icon">🔑</span>
-            Sign In
+            <span className="bottom-nav-label">Sign In</span>
           </Link>
         )}
       </div>

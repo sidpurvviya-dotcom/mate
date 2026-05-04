@@ -41,7 +41,7 @@ export default function HomePage() {
       {/* Navbar */}
       <nav className={`navbar ${scrolled ? 'glass' : ''}`} style={{ justifyContent: 'space-between' }}>
         <Link href="/" className="flex items-center gap-2">
-          <img src="/logo.svg" alt="Mate Logo" className="icon-mate" style={{ borderRadius: '0.5rem' }} />
+          <img src="/logo.svg" alt="Mate Logo" className="icon-mate navbar-logo" style={{ borderRadius: '0.5rem' }} />
           <span className="font-bold text-xl" style={{ fontFamily: 'Outfit, sans-serif' }}>
             <span className="gradient-text">Mate</span>
           </span>
@@ -142,7 +142,7 @@ export default function HomePage() {
             real-time messaging, and verified profiles — making house hunting stress-free.
           </p>
 
-          <div className="flex gap-4 justify-center flex-wrap mb-12 action-buttons">
+          <div className="flex gap-4 justify-center flex-wrap mb-12 hero-buttons">
             <Link href="/rooms" className="btn btn-secondary btn-lg">
               🏠 Browse Rooms
             </Link>
@@ -153,11 +153,11 @@ export default function HomePage() {
           </div>
 
           {/* Stats */}
-          <div className="grid grid-4 gap-4 mx-auto stats-grid" style={{ maxWidth: 700 }}>
+          <div className="grid grid-4 gap-4 mx-auto stats-container" style={{ maxWidth: 700 }}>
             {stats.map((s) => (
               <div key={s.label} className="card text-center stat-card">
-                <div className="font-bold text-2xl gradient-text">{s.value}</div>
-                <div className="text-xs text-secondary-color mt-1">{s.label}</div>
+                <h2 className="font-bold text-2xl gradient-text">{s.value}</h2>
+                <p className="text-xs text-secondary-color mt-1">{s.label}</p>
               </div>
             ))}
           </div>
