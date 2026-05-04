@@ -832,38 +832,76 @@ input[type="range"]::-webkit-slider-thumb {
     font-size: 14px; /* Sets a smaller base size for the entire phone screen */
   }
 
-  /* Fix Home Page Headline */
+  /* 1. Global Spacing & Layout */
+  .container, .main-wrapper {
+    padding: 0 16px !important; /* Standardized side spacing for beauty */
+    width: 100% !important;
+    box-sizing: border-box;
+  }
+
+  section {
+    padding: 32px 0; /* Breathable vertical spacing between sections */
+  }
+
+  /* 2. Typography Management */
   h1, .hero-title {
-    font-size: 1.8rem !important; /* Forces the large title to fit the phone width */
-    line-height: 1.2 !important;
-    padding: 0 10px;
+    font-size: 1.75rem !important; /* Perfect fit for mobile headers */
+    line-height: 1.25 !important;
+    letter-spacing: -0.02em; /* Tighter letter spacing for a modern look */
+    text-align: center !important;
+  }
+
+  p {
+    font-size: 0.95rem !important;
+    line-height: 1.5;
+    color: #4b5563; /* Soft gray for better readability */
   }
 
   /* Shrink All Icons */
   i, svg {
     transform: scale(0.85); /* Visually shrinks icons to prevent overcrowding */
   }
+  .navbar-logo { height: 32px !important; width: auto; }
+  .theme-toggle, .menu-icon, .hamburger { transform: scale(0.85); }
 
-  /* Fix Container Visibility */
-  .container, .card, .hero-section {
-    width: 100% !important;
-    max-width: 100vw !important;
-    padding: 0 12px !important; /* Adds safe breathing room on the edges */
-    box-sizing: border-box;
+  /* 3. Icon & Navigation Styling */
+  .bottom-nav, .mobile-bottom-nav {
+    height: 65px;
+    padding-bottom: env(safe-area-inset-bottom); /* Fix for modern notch phones */
   }
 
-  /* Fit the Action Buttons */
-  .hero-buttons {
+  .nav-icon, .tab-icon {
+    width: 24px !important;
+    height: 24px !important;
+    margin-bottom: 4px;
+    font-size: 1.1rem !important;
+  }
+
+  .nav-label, .bottom-nav-label, .bottom-nav span {
+    font-size: 10px !important;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: -0.2px;
+  }
+
+  /* 4. Component Scaling (Cards & Buttons) */
+  .button-group, .hero-buttons, .action-buttons {
     display: flex !important;
-    flex-direction: column !important;
-    gap: 10px;
+    flex-direction: column !important; /* Stack buttons to fill screen width */
+    gap: 12px !important;
     width: 100%;
   }
-  .hero-buttons .btn {
+  .button-group .btn, .hero-buttons .btn, .action-buttons .btn {
     width: 100% !important;
   }
 
-  /* Shrink Stats Cards to fit 2-per-row */
+  .card {
+    border-radius: 12px !important; /* Smoother, more 'beautiful' corners */
+    padding: 16px !important;
+    margin-bottom: 16px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05) !important; /* Soft, premium shadow */
+  }
+
   .stats-container {
     display: grid !important;
     grid-template-columns: repeat(2, 1fr) !important;
@@ -873,7 +911,7 @@ input[type="range"]::-webkit-slider-thumb {
   
   .stat-card {
     min-width: unset !important;
-    padding: 15px 5px !important;
+    padding: 16px !important;
   }
   .stat-card h2 { font-size: 1.2rem !important; margin: 0; }
   .stat-card p { font-size: 0.75rem !important; margin: 0; }
@@ -887,29 +925,24 @@ input[type="range"]::-webkit-slider-thumb {
     flex: 1 1 100% !important;
   }
 
-  .city-chips {
+  /* 5. Horizontal Swiping for City List */
+  .city-chips-container, .city-chips {
     overflow-x: auto;
     display: flex;
     white-space: nowrap;
     flex-wrap: nowrap !important;
-    padding-bottom: 5px;
+    gap: 8px;
+    padding-bottom: 10px;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
   }
-  .city-chips::-webkit-scrollbar {
+  .city-chips-container::-webkit-scrollbar, .city-chips::-webkit-scrollbar {
     display: none;
   }
 
   /* Bottom Navigation */
-  .bottom-nav-item, .mobile-tab-btn, .bottom-nav {
+  .bottom-nav-item, .mobile-tab-btn {
     padding: 5px !important;
-  }
-  .bottom-nav-label, .bottom-nav span {
-    font-size: 10px !important;
-    letter-spacing: -0.2px;
-  }
-  .mobile-tab-btn .tab-icon {
-    font-size: 1.1rem !important;
   }
 }
 
