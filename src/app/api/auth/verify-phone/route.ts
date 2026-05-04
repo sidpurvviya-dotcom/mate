@@ -96,7 +96,7 @@ export async function PUT(req: NextRequest) {
     await prisma.oTP.update({ where: { id: otp.id }, data: { used: true } })
     await prisma.user.update({
       where: { id: payload.userId },
-      data: { phoneVerified: true },
+      data: { phoneVerified: true, updatedAt: new Date() },
     })
 
     return NextResponse.json({ success: true, message: '✅ Phone number verified successfully!' })
@@ -121,7 +121,7 @@ export async function PATCH(req: NextRequest) {
 
     await prisma.user.update({
       where: { id: payload.userId },
-      data: { phone: `+91${cleanPhone}`, phoneVerified: false },
+      data: { phone: `+91${cleanPhone}`, phoneVerified: false, updatedAt: new Date() },
     })
 
     return NextResponse.json({ success: true, phone: `+91${cleanPhone}` })

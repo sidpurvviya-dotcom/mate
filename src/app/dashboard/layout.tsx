@@ -166,7 +166,7 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
         <div className="navbar glass" style={{ justifyContent: 'space-between', display: 'none' }}
           id="mobile-nav">
           <Link href="/" className="font-bold" style={{ fontFamily: 'Outfit' }}>
-            <span className="gradient-text">Nest</span>Match
+            <span className="gradient-text">Mate</span>
           </Link>
         </div>
         {children}

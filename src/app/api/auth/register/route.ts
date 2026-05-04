@@ -34,6 +34,7 @@ export async function POST(req: NextRequest) {
         name,
         role,
         phone: `+91${cleanPhone}`,
+        updatedAt: new Date(),
       },
     })
 

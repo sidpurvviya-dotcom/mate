@@ -100,7 +100,7 @@ export async function PUT(req: NextRequest) {
     await prisma.oTP.update({ where: { id: otp.id }, data: { used: true } })
     const user = await prisma.user.update({
       where: { id: payload.userId },
-      data: { emailVerified: true },
+      data: { emailVerified: true, updatedAt: new Date() },
     })
 
     // Fire welcome email (don't await — non-blocking)
