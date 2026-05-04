@@ -15,14 +15,14 @@ function createClient(): PrismaClient {
       url: process.env.TURSO_DATABASE_URL,
       authToken: process.env.TURSO_AUTH_TOKEN,
     })
-    return new PrismaClient({ adapter: factory } as Parameters<typeof PrismaClient>[0])
+    return new PrismaClient({ adapter: factory } as any)
   }
 
   // Development: use local SQLite file with absolute path
   const dbPath = path.resolve(process.cwd(), 'prisma', 'mate.db')
   return new PrismaClient({
     datasources: { db: { url: `file:${dbPath}` } },
-  } as Parameters<typeof PrismaClient>[0])
+  } as any)
 }
 
 export const prisma = globalForPrisma.prisma ?? createClient()
